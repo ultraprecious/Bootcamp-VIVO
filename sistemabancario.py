@@ -1,25 +1,26 @@
 #Sistema Bancário
-deposito = 0
-saque = 0
-extrato = ''
-
 def depositar() :
+  global conta
   controle = True
 
   while controle:
     valor = float(input("Informe o valor do depósito:"))
 
-    if type(valor) != float or int:
+    if type(valor) != float:
       print('Entrada inválida para a operação. Digite uma entrada válida.')
 
 
     else:
       controle = False
-      deposito = valor + deposito
-      print("Depósito de {valor} realizado!")
+      conta = valor + conta
+      print(f'Depósito de R${valor:.2f} realizado!')
+      historico.append(f'Depósito: R${valor:.2f}')
+
+      print(f'Saldo atual:R${conta:.2f}')
       
 
-def saque():
+def sacar():
+  global conta
   valor = float(input("Informe o valor do saque: "))
   controle = True
   
@@ -29,11 +30,25 @@ def saque():
       
 
     else:
+      controle = False
       print(f'Saque de R${valor:.2f} realizado!')
+      conta = conta - valor
+      historico.append(f'Saque: R${valor:.2f}')
 
-  
+      print(f'Saldo atual:R${conta:.2f}')
 
+def extrato(historico):
+  global conta
+  auxiliar = 1
+  for i in historico:
+    print(f'{auxiliar} - {i}')
+    auxiliar += 1
 
+  print(f'Saldo atual:R${conta:.2f}')
+
+conta = 0
+saque = 0
+historico = []
 
 menu = f'''
 ***** MENU *****
@@ -50,18 +65,18 @@ Digite a letra entre os colchetes para escolher a operação desejada:
 controle = True
 
 while controle:
-  letra = str(input())
+  letra = str(input(menu))
 
   if letra == "d" :
     depositar()
 
-  if letra == "s" :
-    saque()
+  elif letra == "s" :
+    sacar()
 
-  if letra == "e" :
-    extrato()
+  elif letra == "e" :
+    extrato(historico)
 
-  if letra == "q" :
+  elif letra == "q" :
     print("Saindo do sistema...")
     controle = False
   
