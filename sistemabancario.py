@@ -7,7 +7,12 @@ def depositar() :
     valor = float(input("Informe o valor do depósito:"))
 
     if type(valor) != float:
-      print('Entrada inválida para a operação. Digite uma entrada válida.')
+      msg = input(f'''
+            Entrada inválida para a operação. Digite uma entrada válida.
+            Para voltar ao MENU, digite "q".
+            Para continuar e inserir o valor de depósito, dê ENTER. ''')
+      if msg == "q":
+        controle = False
 
 
     else:
@@ -21,13 +26,30 @@ def depositar() :
 
 def sacar():
   global conta
-  valor = float(input("Informe o valor do saque: "))
+  
   controle = True
   
   while controle:
+    valor = float(input("Informe o valor do saque: "))
+
     if valor > 500:
-      print("Não são permitidos saques a partir de R$500.00.\n Saque um valor inferior")
-      
+      print("Não são permitidos saques a partir de R$500.00.\nSaque um valor inferior")
+  
+
+    elif valor < 0:
+      print("Valor inválido inserido. Digite outro valor") 
+    
+    elif type(valor) != float:
+      msg = input(f'''Entrada inválida para a operação. Digite uma entrada válida.
+            Para voltar ao MENU, digite "q".
+            Para continuar e inserir o valor de depósito, dê ENTER. ''')
+
+      if msg == "q":
+        controle = False
+    
+    elif valor > conta:
+      print(f'Valor maior que o encontrado na conta (R${conta:.2f}). Operação invalidada, tente novamente.')
+
 
     else:
       controle = False
